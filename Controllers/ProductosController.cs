@@ -9,6 +9,7 @@ namespace SistemaGestion.Controllers
     public class ProductosController : Controller
     {
         private ProductosRepositories repository = new ProductosRepositories();
+        private ProductosVendidosRepositories vendidorepositoriy = new ProductosVendidosRepositories();
 
        [HttpGet]
        public ActionResult<List<Producto>> Get()
@@ -50,8 +51,9 @@ namespace SistemaGestion.Controllers
         {
             try
             {
+                bool seEliminaProductoVendido = vendidorepositoriy.eliminarProductoVendido(id);
                 bool seElimino = repository.eliminarProducto(id);
-                if (seElimino)
+                if (seElimino && seEliminaProductoVendido)
                 {
                     return Ok();
                 }
